@@ -73,6 +73,13 @@ func (p Products) MiddlewareValidateProduct(next http.Handler) http.Handler {
 			return
 		}
 
+		err = prod.Validate()
+		if err != nil {
+			p.l.Println("[ERROR] validate product", err)
+			http.Error(rw, "Error validate product", http.StatusBadRequest)
+			return
+		}
+
 		ctx := context.WithValue(r.Context(), KeyProduct{}, prod)
 		r = r.WithContext(ctx)
 
