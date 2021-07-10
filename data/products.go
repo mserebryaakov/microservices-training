@@ -9,15 +9,32 @@ import (
 	"github.com/go-playground/validator"
 )
 
+// swagger:model
 type Product struct {
-	ID          int     `json:"id"`
-	Name        string  `json:"name" validate:"required"`
-	Description string  `json:"description"`
-	Price       float32 `json:"price" validate:"gt=0"`
-	SKU         string  `json:"sku"`
-	CreatedOn   string  `json:"-"`
-	UpdatedOn   string  `json:"-"`
-	DeletedOn   string  `json:"-"`
+	//The product id
+	//
+	// required: true
+	// min: 1
+	ID int `json:"id"`
+
+	//The name for this product
+	// required: true
+	Name string `json:"name" validate:"required"`
+
+	//The description for thid product
+	Description string `json:"description"`
+
+	//The price for this product
+	//
+	// required: true
+	// min: 0
+	Price float32 `json:"price" validate:"gt=0,required"`
+
+	//The SKU for this product
+	SKU       string `json:"sku"`
+	CreatedOn string `json:"-"`
+	UpdatedOn string `json:"-"`
+	DeletedOn string `json:"-"`
 }
 
 func (p *Product) Validate() error {

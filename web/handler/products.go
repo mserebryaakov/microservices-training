@@ -31,6 +31,18 @@ type productsResponseWrapper struct {
 	Body []data.Product
 }
 
+// swagger:response NoContent
+type productNoContent struct {
+}
+
+// swagger:parameters deleteProduct
+type productIDParameterWrapper struct {
+	// The id of the product to delete from the database
+	// in: path
+	// required: true
+	ID int `json:"id"`
+}
+
 type Products struct {
 	l *log.Logger
 }

@@ -5,22 +5,33 @@ definitions:
   Product:
     properties:
       description:
+        description: The description for thid product
         type: string
         x-go-name: Description
       id:
+        description: The product id
         format: int64
+        minimum: 1
         type: integer
         x-go-name: ID
       name:
+        description: The name for this product
         type: string
         x-go-name: Name
       price:
+        description: The price for this product
         format: float
+        minimum: 0
         type: number
         x-go-name: Price
       sku:
+        description: The SKU for this product
         type: string
         x-go-name: SKU
+    required:
+    - id
+    - name
+    - price
     type: object
     x-go-package: github.com/mserebryaakov/microservices-training/data
 host: localhost
@@ -42,18 +53,24 @@ paths:
     delete:
       description: Delete product with the enter id from the database
       operationId: deleteProduct
+      parameters:
+      - description: The id of the product to delete from the database
+        format: int64
+        in: path
+        name: id
+        required: true
+        type: integer
+        x-go-name: ID
       responses:
         "201":
-          $ref: '#/responses/noContentResponse'
-        "404":
-          $ref: '#/responses/errorResponse'
-        "501":
-          $ref: '#/responses/errorResponse'
+          $ref: '#/responses/noContent'
       tags:
       - products
 produces:
 - application/json
 responses:
+  NoContent:
+    description: ""
   productsResponse:
     description: A list of products returns in the response
     headers:
