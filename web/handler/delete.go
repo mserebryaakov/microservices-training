@@ -12,7 +12,7 @@ import (
 // swagger:route DELETE /products/{id} products deleteProduct
 // Delete product with the enter id from the database
 // responses:
-//	200: noContentResponse
+//	201: noContentResponse
 //	400: errorResponse
 //	404: errorResponse
 

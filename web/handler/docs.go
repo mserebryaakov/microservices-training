@@ -27,6 +27,7 @@ type productsResponseWrapper struct {
 // swagger:parameters createProduct updateProduct
 type productParamWrapper struct {
 	// Product in the system
+	// Note: the id must be ignored when creating a product
 	// in: body
 	Body data.Product
 }
