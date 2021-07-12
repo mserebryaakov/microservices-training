@@ -6,6 +6,12 @@ import (
 	"github.com/mserebryaakov/microservices-training/data"
 )
 
+// swagger:route POST /products products createProduct
+// Create product with the enter id from the database
+// responses:
+//	200: noContent
+//	422: errorValidation
+
 func (p *Products) AddProduct(rw http.ResponseWriter, r *http.Request) {
 	p.l.Println("Handle POST")
 

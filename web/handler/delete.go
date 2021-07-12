@@ -13,6 +13,8 @@ import (
 // Delete product with the enter id from the database
 // responses:
 //	201: noContent
+//	400: errorResponse
+//	404: errorResponse
 
 func (p *Products) DeleteProduct(rw http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)

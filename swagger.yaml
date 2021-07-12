@@ -1,11 +1,10 @@
-basePath: /
 consumes:
 - application/json
 definitions:
   Product:
     properties:
       description:
-        description: The description for thid product
+        description: The description for this product
         type: string
         x-go-name: Description
       id:
@@ -49,6 +48,22 @@ paths:
           $ref: '#/responses/productsResponse'
       tags:
       - products
+    post:
+      description: Create product with the enter id from the database
+      operationId: createProduct
+      parameters:
+      - $ref: '#/definitions/Product'
+        description: Product in the system
+        in: path
+        name: Body
+        required: true
+      responses:
+        "200":
+          $ref: '#/responses/noContent'
+        "422":
+          $ref: '#/responses/errorValidation'
+      tags:
+      - products
   /products/{id}:
     delete:
       description: Delete product with the enter id from the database
@@ -64,6 +79,28 @@ paths:
       responses:
         "201":
           $ref: '#/responses/noContent'
+        "400":
+          $ref: '#/responses/errorResponse'
+        "404":
+          $ref: '#/responses/errorResponse'
+      tags:
+      - products
+    put:
+      description: Update product with the enter id from the database
+      operationId: updateProduct
+      parameters:
+      - $ref: '#/definitions/Product'
+        description: Product in the system
+        in: path
+        name: Body
+        required: true
+      responses:
+        "201":
+          $ref: '#/responses/noContent'
+        "400":
+          $ref: '#/responses/errorResponse'
+        "422":
+          $ref: '#/responses/errorValidation'
       tags:
       - products
 produces:
@@ -71,6 +108,10 @@ produces:
 responses:
   NoContent:
     description: ""
+  errorResponse:
+    description: Response ERROR
+  errorValidation:
+    description: Validation ERROR
   productsResponse:
     description: A list of products returns in the response
     headers:

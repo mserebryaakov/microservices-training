@@ -21,7 +21,7 @@ type Product struct {
 	// required: true
 	Name string `json:"name" validate:"required"`
 
-	//The description for thid product
+	//The description for this product
 	Description string `json:"description"`
 
 	//The price for this product
