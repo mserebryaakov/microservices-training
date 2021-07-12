@@ -1,17 +1,3 @@
-// Package classification of Product API.
-//
-// Documentation for Product API
-//
-//     Schemes: http
-//     Host: localhost
-//     Version: 1.0.0
-//
-//     Consumes:
-//     - application/json
-//
-//     Produces:
-//     - application/json
-// swagger:meta
 package handler
 
 import (

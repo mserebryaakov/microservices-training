@@ -52,14 +52,12 @@ paths:
       description: Create product with the enter id from the database
       operationId: createProduct
       parameters:
-      - $ref: '#/definitions/Product'
-        description: Product in the system
-        in: path
+      - description: Product in the system
+        in: body
         name: Body
-        required: true
+        schema:
+          $ref: '#/definitions/Product'
       responses:
-        "200":
-          $ref: '#/responses/noContent'
         "422":
           $ref: '#/responses/errorValidation'
       tags:
@@ -77,8 +75,6 @@ paths:
         type: integer
         x-go-name: ID
       responses:
-        "201":
-          $ref: '#/responses/noContent'
         "400":
           $ref: '#/responses/errorResponse'
         "404":
@@ -89,14 +85,19 @@ paths:
       description: Update product with the enter id from the database
       operationId: updateProduct
       parameters:
-      - $ref: '#/definitions/Product'
-        description: Product in the system
-        in: path
+      - description: Product in the system
+        in: body
         name: Body
+        schema:
+          $ref: '#/definitions/Product'
+      - description: The id of the product to delete from the database
+        format: int64
+        in: path
+        name: id
         required: true
+        type: integer
+        x-go-name: ID
       responses:
-        "201":
-          $ref: '#/responses/noContent'
         "400":
           $ref: '#/responses/errorResponse'
         "422":
@@ -106,22 +107,18 @@ paths:
 produces:
 - application/json
 responses:
-  NoContent:
-    description: ""
   errorResponse:
     description: Response ERROR
   errorValidation:
     description: Validation ERROR
+  noContentResponse:
+    description: No content is returned by this API endpoint
   productsResponse:
     description: A list of products returns in the response
-    headers:
-      Body:
-        description: |-
-          All products in the system
-          in:Body
-        items:
-          $ref: '#/definitions/Product'
-        type: array
+    schema:
+      items:
+        $ref: '#/definitions/Product'
+      type: array
 schemes:
 - http
 swagger: "2.0"

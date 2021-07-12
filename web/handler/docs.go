@@ -1,3 +1,17 @@
+// Package classification of Product API.
+//
+// Documentation for Product API
+//
+//     Schemes: http
+//     Host: localhost
+//     Version: 1.0.0
+//
+//     Consumes:
+//     - application/json
+//
+//     Produces:
+//     - application/json
+// swagger:meta
 package handler
 
 import "github.com/mserebryaakov/microservices-training/data"
@@ -6,22 +20,23 @@ import "github.com/mserebryaakov/microservices-training/data"
 // swagger:response productsResponse
 type productsResponseWrapper struct {
 	// All products in the system
-	// in:Body
+	// in: body
 	Body []data.Product
 }
 
 // swagger:parameters createProduct updateProduct
 type productParamWrapper struct {
 	// Product in the system
-	// in: path
+	// in: body
 	Body data.Product
 }
 
-// swagger:response NoContent
-type productNoContent struct {
+// No content is returned by this API endpoint
+// swagger:response noContentResponse
+type noContentResponseWrapper struct {
 }
 
-// swagger:parameters deleteProduct
+// swagger:parameters deleteProduct updateProduct
 type productIDParameterWrapper struct {
 	// The id of the product to delete from the database
 	// in: path
@@ -31,10 +46,10 @@ type productIDParameterWrapper struct {
 
 // Validation ERROR
 // swagger:response errorValidation
-type errorValidation struct {
+type errorValidationWrapper struct {
 }
 
 // Response ERROR
 // swagger:response errorResponse
-type errorResponse struct {
+type errorResponseWrapper struct {
 }

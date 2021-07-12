@@ -9,7 +9,7 @@ import (
 // swagger:route POST /products products createProduct
 // Create product with the enter id from the database
 // responses:
-//	200: noContent
+//	201: noContentResponse
 //	422: errorValidation
 
 func (p *Products) AddProduct(rw http.ResponseWriter, r *http.Request) {

@@ -12,7 +12,7 @@ import (
 // swagger:route PUT /products/{id} products updateProduct
 // Update product with the enter id from the database
 // responses:
-//	201: noContent
+//	200: noContentResponse
 //	400: errorResponse
 //	422: errorValidation
 
