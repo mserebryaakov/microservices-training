@@ -17,5 +17,10 @@ func (p *Products) AddProduct(rw http.ResponseWriter, r *http.Request) {
 
 	prod := r.Context().Value(KeyProduct{}).(data.Product)
 
-	data.AddProduct(&prod)
+	err := data.AddProduct(&prod, p.db)
+	if err != nil {
+		p.l.Println("Error add product from db", err)
+		http.Error(rw, "Error post request", http.StatusInternalServerError)
+		return
+	}
 }

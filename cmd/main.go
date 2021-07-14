@@ -19,6 +19,11 @@ func main() {
 	l := log.New(os.Stdout, "product-api ", log.LstdFlags)
 
 	ph := handler.NewProducts(l)
+	err := ph.Open()
+	if err != nil {
+		l.Println("[ERROR] database connection")
+		l.Fatal(err)
+	}
 
 	sm := mux.NewRouter()
 
@@ -65,5 +70,6 @@ func main() {
 
 	tc, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
+	defer ph.Close()
 	s.Shutdown(tc)
 }

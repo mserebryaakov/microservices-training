@@ -28,14 +28,15 @@ func (p *Products) UpdateProduct(rw http.ResponseWriter, r *http.Request) {
 
 	prod := r.Context().Value(KeyProduct{}).(data.Product)
 
-	err = data.UpdateProduct(id, &prod)
+	err = data.UpdateProduct(id, &prod, p.db)
 	if err == data.ErrProductNotFound {
 		http.Error(rw, "Product not found", http.StatusNotFound)
 		return
 	}
 
 	if err != nil {
-		http.Error(rw, "Error", http.StatusInternalServerError)
+		p.l.Println("Error update product from db", err)
+		http.Error(rw, "Error put request", http.StatusInternalServerError)
 		return
 	}
 }

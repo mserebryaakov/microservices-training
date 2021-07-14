@@ -1,44 +1,35 @@
 package handler
 
 import (
-	"context"
+	"database/sql"
 	"log"
-	"net/http"
 
-	"github.com/mserebryaakov/microservices-training/data"
+	_ "github.com/lib/pq"
 )
 
+const infoDB string = "user=serebryakov password=123 dbname=productServiceDB sslmode=disable"
+
 type Products struct {
-	l *log.Logger
+	l  *log.Logger
+	db *sql.DB
 }
 
 func NewProducts(l *log.Logger) *Products {
-	return &Products{l}
+	return &Products{l: l}
 }
 
 type KeyProduct struct{}
 
-func (p Products) MiddlewareValidateProduct(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
-		prod := data.Product{}
+func (p *Products) Open() error {
+	var err error
+	p.db, err = sql.Open("postgres", infoDB)
+	if err != nil {
+		return err
+	}
+	return nil
+}
 
-		err := prod.FromJSON(r.Body)
-		if err != nil {
-			p.l.Println("[ERROR] deserializing product", err)
-			http.Error(rw, "Error reading product", http.StatusBadRequest)
-			return
-		}
-
-		err = prod.Validate()
-		if err != nil {
-			p.l.Println("[ERROR] validate product", err)
-			http.Error(rw, "Error validate product", http.StatusBadRequest)
-			return
-		}
-
-		ctx := context.WithValue(r.Context(), KeyProduct{}, prod)
-		r = r.WithContext(ctx)
-
-		next.ServeHTTP(rw, r)
-	})
+func (p *Products) Close() {
+	p.l.Println("[SUCCESS] database close connection ")
+	p.db.Close()
 }

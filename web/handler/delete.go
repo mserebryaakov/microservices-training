@@ -26,14 +26,15 @@ func (p *Products) DeleteProduct(rw http.ResponseWriter, r *http.Request) {
 
 	p.l.Println("Handle DELETE", id)
 
-	err = data.DeleteProduct(id)
+	err = data.DeleteProduct(id, p.db)
 	if err == data.ErrProductNotFound {
 		http.Error(rw, "Id not found", http.StatusNotFound)
 		return
 	}
 
 	if err != nil {
-		http.Error(rw, "Error", http.StatusInternalServerError)
+		p.l.Println("Error delete product from db", err)
+		http.Error(rw, "Error delete request", http.StatusInternalServerError)
 		return
 	}
 }
